@@ -6,7 +6,7 @@ public interface GroupService {
 
     boolean addGroup(Group group);
 
-    boolean deleteGroup(Group group);
+    boolean deleteGroupById(Long id);
 
     Group findGroupById(long id);
 }

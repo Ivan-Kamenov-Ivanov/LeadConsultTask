@@ -1,11 +1,9 @@
 package com.leadconsult.app.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Teacher {
@@ -15,14 +13,49 @@ public class Teacher {
     private long id;
     private String name;
     private int age;
-    private List<Course> courses;
-    private List<Group> groups;
+    @ManyToMany
+    @JoinTable(name = "teacher_course",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<Course> courses = new HashSet<>();
 
     public Teacher() {
     }
 
-    public Teacher(long id) {
-        this.id = id;
+    public Teacher(String name, int age) {
+        this.name = name;
+        this.age = age;
     }
+
+    public Teacher(long id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
 
 }

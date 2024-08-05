@@ -6,9 +6,9 @@ public interface StudentService {
 
     boolean addStudent(Student student);
 
-    boolean deleteStudent(Student student);
+    boolean deleteStudentById(Long id);
 
-    Student findStudent(String name);
+    Student findStudentById(Long id);
 
-    Student updateStudent(Student student);
+    Student updateStudent(Student updatedStudent);
 }

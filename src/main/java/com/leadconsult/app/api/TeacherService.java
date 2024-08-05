@@ -6,9 +6,9 @@ public interface TeacherService {
 
     boolean addTeacher(Teacher teacher);
 
-    boolean deleteTeacher(Teacher teacher);
+    boolean deleteTeacherById(Long id);
 
-    Teacher findTeacher(String name);
+    Teacher findTeacherById(Long id);
 
     Teacher updateTeacher(Teacher teacher);
 }

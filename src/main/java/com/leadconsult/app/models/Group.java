@@ -1,30 +1,36 @@
 package com.leadconsult.app.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "\"group\"")
 public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int groupNumber;
+    @ManyToMany
+    @JoinTable(name = "group_student",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private Set<Student> studentList = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "group_teacher",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+    private Set<Teacher> teachers;
 
-    public Group() {
-    }
-
-    public Group(int groupNumber) {
-        this.groupNumber = groupNumber;
-    }
+    @ManyToMany
+    @JoinTable(name = "group_students",
+            joinColumns = @JoinColumn(name = "group_id"))
+    private Set<Student> students = new LinkedHashSet<>();
 
     public long getId() {
         return id;
     }
 
-    public int getGroupNumber() {
-        return groupNumber;
-    }
 }

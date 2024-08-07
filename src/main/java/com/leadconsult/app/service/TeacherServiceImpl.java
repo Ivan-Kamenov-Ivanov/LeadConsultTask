@@ -1,11 +1,11 @@
 package com.leadconsult.app.service;
 
 import com.leadconsult.app.api.TeacherService;
-import com.leadconsult.app.models.Student;
 import com.leadconsult.app.models.Teacher;
 import com.leadconsult.app.repo.TeacherRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,27 +18,27 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public boolean addTeacher(Teacher teacher) {                //custom Exception handling to be added
+    public Teacher addTeacher(Teacher teacher) {                //custom Exception handling to be added
         if(teacherRepository.existsById(teacher.getId())){
-            return false;
+            return teacherRepository.save(teacher);
         }
-        teacherRepository.save(teacher);
-        return true;
+        return null;
     }
 
     @Override
-    public boolean deleteTeacherById(Long id) {             //custom Exception handling to be added
-        if(!teacherRepository.existsById(id)){
-            return false;
-        }
-        teacherRepository.deleteById(id);
-        return true;
+    public List<Teacher> findAllTeachers() {
+        return teacherRepository.findAll();
     }
 
     @Override
     public Teacher findTeacherById(Long id) {                   //custom Exception handling to be added
         Optional<Teacher> result = teacherRepository.findById(id);
         return result.orElse(null);
+    }
+
+    @Override
+    public List<Teacher> findAllTeachersByCourseAndGroupId(Long courseId, Long groupId) {
+        return teacherRepository.findAllTeachersByCourseAndGroupId(courseId, groupId);
     }
 
     @Override
@@ -50,5 +50,12 @@ public class TeacherServiceImpl implements TeacherService {
         existingTeacher.get().setName(teacher.getName());
         existingTeacher.get().setAge(teacher.getAge());
         return teacherRepository.save(existingTeacher.get());
+    }
+
+    @Override
+    public void deleteTeacherById(Long id) {             //custom Exception handling to be added
+        if(!teacherRepository.existsById(id)){
+            teacherRepository.deleteById(id);
+        }
     }
 }

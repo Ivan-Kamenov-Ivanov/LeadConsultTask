@@ -1,16 +1,38 @@
 package com.leadconsult.app.controller;
 
 import com.leadconsult.app.api.GroupService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import com.leadconsult.app.models.Group;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
+@RequestMapping("/groups")
 public class GroupController {
 
-    @Autowired
     private final GroupService groupService;
 
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
+    }
+
+    @PostMapping
+    public Group addGroup(@RequestBody Group group){
+        return groupService.addGroup(group);
+    }
+
+    @GetMapping
+    public List<Group> findAllGroups(){
+        return groupService.findAllGroups();
+    }
+
+    @GetMapping("{id}")
+    public Group findGroupById(@PathVariable Long id){
+        return groupService.findGroupById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteGroupById(@PathVariable Long id){
+        groupService.deleteGroupById(id);
     }
 }

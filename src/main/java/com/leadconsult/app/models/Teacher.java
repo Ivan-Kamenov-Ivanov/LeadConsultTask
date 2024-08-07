@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table
 public class Teacher {
 
     @Id
@@ -19,19 +20,9 @@ public class Teacher {
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Course> courses = new HashSet<>();
 
-    public Teacher() {
-    }
+    @ManyToMany(mappedBy = "teachers")
+    private Set<Group> groups;
 
-    public Teacher(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public Teacher(long id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
 
     public long getId() {
         return id;
@@ -45,10 +36,6 @@ public class Teacher {
         return age;
     }
 
-    public Set<Course> getCourses() {
-        return courses;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -56,6 +43,4 @@ public class Teacher {
     public void setAge(int age) {
         this.age = age;
     }
-
-
 }

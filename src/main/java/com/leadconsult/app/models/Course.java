@@ -1,5 +1,22 @@
 package com.leadconsult.app.models;
 
-public interface Course {
+import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "courses")
+public class Course {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String name;
+    @OneToMany
+    private final Set<Group> groupSet = new HashSet<>();
+
+    public long getId() {
+        return id;
+    }
 }

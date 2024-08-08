@@ -26,20 +26,20 @@ public class StudentController {
         return studentService.findAllStudents();
     }
 
-    @GetMapping
+    @GetMapping("/course/{id}")
     public List<Student> findAllStudentsByCourseId(@PathVariable Long id){
         return studentService.findAllStudentsByCourseId(id);
     }
 
-    @GetMapping
-    public List<Student> findAllStudentsByGroupId(@PathVariable Long groupId){
-        return studentService.findAllStudentsByGroupId(groupId);
+    @GetMapping("/group/{id}")
+    public List<Student> findAllStudentsByGroupId(@PathVariable Long id){
+        return studentService.findAllStudentsByGroupId(id);
     }
 
-    @GetMapping("/olderThan/{age}/course/{courseId}")
+    @GetMapping("/olderThan/{age}/course/{id}")
     public List<Student> findStudentsOlderByAgeAndCourseId(@PathVariable int age,
-                                                           @PathVariable Long courseId){
-        return studentService.findStudentsOlderByAgeAndCourseId(age, courseId);
+                                                           @PathVariable Long id){
+        return studentService.findStudentsOlderByAgeAndCourseId(age, id);
     }
 
     @GetMapping("/{id}")

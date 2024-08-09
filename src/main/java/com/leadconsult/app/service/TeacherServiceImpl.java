@@ -18,11 +18,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher addTeacher(Teacher teacher) {                //custom Exception handling to be added
-        if(teacherRepository.existsById(teacher.getId())){
+    public Teacher addTeacher(Teacher teacher) {
+        try {
             return teacherRepository.save(teacher);
+        } catch (IllegalArgumentException e){
+                throw new IllegalArgumentException("Invalid data", e);
         }
-        return null;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher findTeacherById(Long id) {                   //custom Exception handling to be added
+    public Teacher findTeacherById(Long id) {
         Optional<Teacher> result = teacherRepository.findById(id);
         return result.orElse(null);
     }
@@ -42,7 +43,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher updateTeacher(Teacher teacher) {             //custom Exception handling to be added
+    public Teacher updateTeacher(Teacher teacher) {
         Optional<Teacher> existingTeacher = teacherRepository.findById(teacher.getId());
         if(existingTeacher.isEmpty()){
             return null;
@@ -53,9 +54,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void deleteTeacherById(Long id) {             //custom Exception handling to be added
-        if(!teacherRepository.existsById(id)){
+    public boolean deleteTeacherById(Long id) {
+        if(teacherRepository.existsById(id)){
             teacherRepository.deleteById(id);
+            return true;
         }
+        return false;
     }
 }

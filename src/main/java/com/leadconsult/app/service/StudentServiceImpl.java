@@ -2,7 +2,6 @@ package com.leadconsult.app.service;
 
 import com.leadconsult.app.api.StudentService;
 import com.leadconsult.app.models.Student;
-import com.leadconsult.app.repo.CourseRepository;
 import com.leadconsult.app.repo.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +13,21 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     @Override
-    public Student addStudent(Student student) {                //custom Exception handling to be added
-        if (studentRepository.existsById(student.getId())) {
+    public Student addStudent(Student student) {
+        try {
             return studentRepository.save(student);
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid data", e);
         }
-        return null;
     }
 
     @Override
-    public Student findStudentById(Long id) {                   //custom Exception handling to be added
+    public Student findStudentById(Long id) {
         Optional<Student> result = studentRepository.findById(id);
         return result.orElse(null);
     }
@@ -38,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updateStudent(Student updatedStudent) {             //custom Exception handling to be added
+    public Student updateStudent(Student updatedStudent) {
         Optional<Student> existingStudent = studentRepository.findById(updatedStudent.getId());
         if (existingStudent.isEmpty()) {
             return null;
@@ -69,10 +69,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteStudentById(Long id) {             //custom Exception handling to be added
-        if (studentRepository.existsById(id)) {
+    public boolean deleteStudentById(Long id) {
+        if(studentRepository.existsById(id)){
             studentRepository.deleteById(id);
+                return true;
         }
-
+        return false;
     }
 }

@@ -18,15 +18,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course addCourse(Course course) {               //custom Exception handling to be added
-        if (courseRepository.existsById(course.getId())) {
+    public Course addCourse(Course course) {
+        try {
             return courseRepository.save(course);
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid data", e);
         }
-        return null;
     }
 
     @Override
-    public Course findCourseById(long id) {             //custom Exception handling to be added
+    public Course findCourseById(long id) {
         Optional<Course> result = courseRepository.findById(id);
         return result.orElse(null);
     }
@@ -37,9 +38,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourseById(long id) {            //custom Exception handling to be added
+    public boolean deleteCourseById(long id) {
         if (courseRepository.existsById(id)) {
             courseRepository.deleteById(id);
+            return true;
         }
+        return false;
     }
 }

@@ -12,5 +12,5 @@ public interface CourseService {
 
     List<Course> findAllCourses();
 
-    void deleteCourseById(long id);
+    boolean deleteCourseById(long id);
 }

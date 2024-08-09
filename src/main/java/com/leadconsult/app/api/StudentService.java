@@ -14,7 +14,7 @@ public interface StudentService {
 
     Student updateStudent(Student updatedStudent);
 
-    void deleteStudentById(Long id);
+    boolean deleteStudentById(Long id);
 
     List<Student> findAllStudentsByCourseId(Long courseId);
 

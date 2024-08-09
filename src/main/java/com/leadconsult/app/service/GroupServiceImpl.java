@@ -20,11 +20,12 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public Group addGroup(Group group) {              //custom Exception handling to be added
-        if(groupRepository.existsById(group.getId())){
-           return groupRepository.save(group);
+    public Group addGroup(Group group) {
+        try {
+            return groupRepository.save(group);
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Invalid data", e);
         }
-        return null;
     }
 
     @Override
@@ -33,15 +34,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group findGroupById(long id) {               //custom Exception handling to be added
+    public Group findGroupById(long id) {
         Optional<Group> result = groupRepository.findById(id);
         return result.orElseThrow(null);
     }
 
     @Override
-    public void deleteGroupById(Long id) {            //custom Exception handling to be added
+    public boolean deleteGroupById(Long id) {
         if(groupRepository.existsById(id)){
             groupRepository.deleteById(id);
+            return true;
         }
+        return false;
     }
 }

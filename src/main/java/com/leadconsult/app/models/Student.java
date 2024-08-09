@@ -22,6 +22,9 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private Set<Group> groups;
 
+    public Student(String name, int age) {
+    }
+
     public long getId() {
         return id;
     }

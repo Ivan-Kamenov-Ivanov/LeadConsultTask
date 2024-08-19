@@ -39,7 +39,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<Teacher> findAllTeachersByCourseAndGroupId(Long courseId, Long groupId) {
-        return teacherRepository.findAllTeachersByCourseAndGroupId(courseId, groupId);
+        return teacherRepository.findByCourses_IdAndGroups_Id(courseId, groupId);
     }
 
     @Override

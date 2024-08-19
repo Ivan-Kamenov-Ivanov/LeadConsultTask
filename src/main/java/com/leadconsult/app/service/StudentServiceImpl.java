@@ -50,22 +50,22 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> findAllStudentsByCourseId(Long courseId) {
-        return studentRepository.findAllStudentsByCourseId(courseId);
+        return studentRepository.findByCourses_Id(courseId);
     }
 
     @Override
     public List<Student> findAllStudentsByGroupId(Long groupId) {
-        return studentRepository.findAllStudentsByGroupId(groupId);
+        return studentRepository.findByGroups_Id(groupId);
     }
 
     @Override
     public List<Student> findAllStudentsByCourseIdAndGroupId(Long courseId, Long groupId) {
-        return studentRepository.findAllStudentsByCourseIdAndGroupId(courseId, groupId);
+        return studentRepository.findByCourses_IdAndGroups_Id(courseId, groupId);
     }
 
     @Override
     public List<Student> findStudentsOlderByAgeAndCourseId(int age, Long courseId) {
-        return studentRepository.findOlderByAgeAndCourseId(age, courseId);
+        return studentRepository.findByAgeGreaterThanAndCourses_Id(age, courseId);
     }
 
     @Override
